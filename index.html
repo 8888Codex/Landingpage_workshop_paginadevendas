@@ -1,0 +1,1130 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Workshop: De R$3k para R$50k | Cognita</title>
+  
+  <!-- Google Fonts -->
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Caveat:wght@600&display=swap" rel="stylesheet">
+  
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            background: '#050505',
+            spotlight: '#380B0F',
+            accent: '#FF4D5A',
+            accentHover: '#FF3342',
+            textBody: '#B3B3B3',
+          },
+          fontFamily: {
+            sans: ['Inter', 'sans-serif'],
+            handwriting: ['Caveat', 'cursive'],
+          },
+          boxShadow: {
+            'glow': '0 0 20px rgba(255, 77, 90, 0.5)',
+            'video-glow': '0 20px 50px -10px rgba(255, 77, 90, 0.15)',
+          }
+        },
+      },
+    }
+  </script>
+  
+  <style>
+    body {
+      background-color: #050505;
+      color: #B3B3B3;
+      font-family: 'Inter', sans-serif;
+      -webkit-font-smoothing: antialiased;
+      overflow-x: hidden;
+    }
+    
+    ::selection {
+      background-color: #FF4D5A;
+      color: white;
+    }
+    
+    .spotlight-bg {
+      position: absolute;
+      top: -100px;
+      left: 50%;
+      transform: translateX(-50%);
+      width: 900px;
+      height: 500px;
+      background: radial-gradient(circle, rgba(255, 77, 90, 0.25) 0%, transparent 70%);
+      filter: blur(120px);
+      border-radius: 100%;
+      pointer-events: none;
+      z-index: 0;
+      mix-blend-mode: screen;
+    }
+    
+    .glow-shadow {
+      box-shadow: 0 0 20px rgba(255, 77, 90, 0.5);
+    }
+    
+    .video-glow-shadow {
+      box-shadow: 0 20px 50px -10px rgba(255, 77, 90, 0.15);
+    }
+    
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(20px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
+    
+    .fade-in {
+      animation: fadeIn 1s ease-out;
+    }
+    
+    @keyframes pulse-glow {
+      0%, 100% { box-shadow: 0 0 20px rgba(255, 77, 90, 0.5); }
+      50% { box-shadow: 0 0 40px rgba(255, 77, 90, 0.8); }
+    }
+    
+    .pulse-glow {
+      animation: pulse-glow 2s infinite;
+    }
+    
+    @keyframes fadeNumber {
+      0% { opacity: 1; transform: scale(1); }
+      50% { opacity: 0.3; transform: scale(0.95); }
+      100% { opacity: 1; transform: scale(1); }
+    }
+    
+    .number-change {
+      animation: fadeNumber 0.6s ease;
+    }
+    
+    html {
+      scroll-behavior: smooth;
+    }
+    
+    .cta-button {
+      background-color: #FF4D5A;
+      color: white;
+      font-weight: 700;
+      padding: 1rem 2rem;
+      border-radius: 0.5rem;
+      transition: all 0.3s ease;
+      display: inline-block;
+      text-align: center;
+    }
+    
+    .cta-button:hover {
+      background-color: #FF3342;
+      box-shadow: 0 0 30px rgba(255, 77, 90, 0.6);
+      transform: translateY(-2px);
+    }
+    
+    .sticky-cta {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      z-index: 50;
+      background: rgba(5, 5, 5, 0.95);
+      backdrop-filter: blur(10px);
+      border-top: 1px solid rgba(255, 77, 90, 0.2);
+      padding: 1rem;
+      display: none;
+    }
+    
+    @media (max-width: 768px) {
+      .sticky-cta {
+        display: block;
+      }
+    }
+  </style>
+  
+  <!-- Meta Pixel Code -->
+  <script>
+  !function(f,b,e,v,n,t,s)
+  {if(f.fbq)return;n=f.fbq=function(){n.callMethod?
+  n.callMethod.apply(n,arguments):n.queue.push(arguments)};
+  if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';
+  n.queue=[];t=b.createElement(e);t.async=!0;
+  t.src=v;s=b.getElementsByTagName(e)[0];
+  s.parentNode.insertBefore(t,s)}(window, document,'script',
+  'https://connect.facebook.net/en_US/fbevents.js');
+  fbq('init', '894631109824367');
+  fbq('track', 'PageView');
+  </script>
+  <noscript><img height="1" width="1" style="display:none"
+  src="https://www.facebook.com/tr?id=894631109824367&ev=PageView&noscript=1"
+  /></noscript>
+  <!-- End Meta Pixel Code -->
+</head>
+<body>
+  
+  <!-- SEÇÃO 1: HERO / HEADLINE -->
+  <section class="relative min-h-screen flex items-center justify-center px-4 py-20 overflow-hidden">
+    <div class="spotlight-bg"></div>
+    <div class="relative z-10 max-w-5xl mx-auto text-center fade-in">
+      <h1 class="text-white font-extrabold text-4xl md:text-6xl lg:text-7xl mb-6 leading-tight">
+        Enquanto Você Lê Isso, Alguém Com Menos Técnica Que Você Está Fechando R$50k.
+      </h1>
+      <p class="text-accent font-medium text-xl md:text-2xl lg:text-3xl">
+        A diferença não é talento. É processo comercial. E você não tem um.
+      </p>
+    </div>
+  </section>
+
+  <!-- SEÇÃO 2: IDENTIFICAÇÃO / DOR -->
+  <section class="py-20 px-4">
+    <div class="max-w-3xl mx-auto space-y-6 text-textBody text-lg leading-relaxed">
+      <p>
+        Você passou quantas horas aprendendo <span class="text-white font-semibold">N8N</span>?
+      </p>
+      <p>
+        Quantas madrugadas debugando fluxo? Quantos vídeos de prompt engineering? Quantas APIs integradas?
+      </p>
+      <p>
+        Pra no final cobrar <span class="text-accent font-bold text-xl">R$3k</span> e ainda ouvir <span class="text-accent font-bold text-xl">"me faz por R$2k?"</span>
+      </p>
+      <p>
+        Você manda a proposta. Espera. Torce.
+      </p>
+      <p>
+        O cliente some por 3 dias. Volta pedindo desconto. Você aceita — porque precisa do case, porque precisa pagar as contas, porque não sabe como justificar mais.
+      </p>
+      
+      <div class="my-8 p-6 border-l-4 border-accent bg-spotlight/30 rounded-r-lg">
+        <p class="text-white italic text-xl">
+          "Acabei de fechar mais um projeto de R$45k 🚀"
+        </p>
+        <p class="text-textBody text-sm mt-2">— Um cara no LinkedIn que mal sabe a diferença entre GPT-3.5 e GPT-4</p>
+      </div>
+      
+      <p>
+        E você pensa: <span class="text-white">"Esse cara é marketing. Deve ser mentira. Ou ele tem contatos."</span>
+      </p>
+      <p>
+        Não é mentira. Não é contato.
+      </p>
+      <p class="text-white font-bold text-2xl md:text-3xl mt-8 text-center">
+        É processo comercial. E você não tem um.
+      </p>
+    </div>
+  </section>
+
+  <!-- SEÇÃO 3: O CÁLCULO -->
+  <section class="py-20 px-4 bg-spotlight/20">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-white font-bold text-3xl md:text-4xl mb-12 text-center">
+        Vamos fazer uma conta que você não quer fazer.
+      </h2>
+      
+      <div class="space-y-8 text-textBody text-lg">
+        <div class="grid md:grid-cols-2 gap-6">
+          <div class="p-6 border border-gray-800 rounded-lg">
+            <p class="text-textBody mb-2">Hoje você fecha:</p>
+            <p class="text-white text-2xl font-bold mb-1">2 projetos/mês</p>
+            <p class="text-accent text-3xl font-bold">R$4k cada</p>
+            <p class="text-white text-xl font-bold mt-4">= R$8k/mês</p>
+          </div>
+          
+          <div class="p-6 border-2 border-accent rounded-lg glow-shadow">
+            <p class="text-textBody mb-2">Com processo comercial:</p>
+            <p class="text-white text-2xl font-bold mb-1">1 projeto/mês</p>
+            <p class="text-accent text-3xl font-bold">R$35k cada</p>
+            <p class="text-white text-xl font-bold mt-4">= R$35k/mês</p>
+          </div>
+        </div>
+        
+        <div class="text-center py-8 border-t border-b border-gray-800">
+          <p class="text-textBody text-lg mb-4">Diferença:</p>
+          <p class="text-accent text-5xl md:text-6xl font-bold mb-2">R$27.000</p>
+          <p class="text-textBody">por mês</p>
+        </div>
+        
+        <div class="text-center">
+          <p class="text-accent text-6xl md:text-7xl font-bold mb-2">R$324.000</p>
+          <p class="text-white text-xl font-bold">por ano</p>
+        </div>
+        
+        <p class="text-white font-bold text-xl md:text-2xl text-center mt-8">
+          Isso não é "potencial". Isso é o que você está deixando na mesa agora. Todo mês. Porque não sabe apresentar uma proposta.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO 4: A JANELA / URGÊNCIA -->
+  <section class="py-20 px-4">
+    <div class="max-w-4xl mx-auto space-y-8 text-textBody text-lg leading-relaxed">
+      <p>
+        Eu vou te falar o que ninguém fala porque não convém:
+      </p>
+      
+      <div class="bg-accent/10 border-2 border-accent rounded-lg p-6 my-8">
+        <p class="text-white font-bold text-2xl md:text-3xl text-center">
+          O mercado de IA está numa janela de <span class="text-accent">18-24 meses</span>.
+        </p>
+      </div>
+      
+      <p>
+        Agora, cliente não sabe quanto IA vale. Ele paga o que você pedir — se você souber pedir.
+      </p>
+      <p>
+        Daqui a 2 anos? Vai ter 500 agências competindo por preço. Todo mundo oferecendo "chatbot" por R$1.500. Corrida pro fundo.
+      </p>
+      
+      <div class="my-12 p-6 bg-gray-900 rounded-lg border border-gray-800">
+        <p class="text-white font-semibold mb-4">Isso não é terrorismo. É o ciclo natural de toda tecnologia:</p>
+        <div class="space-y-2 text-textBody">
+          <p>→ Sites nos anos 2000</p>
+          <p>→ Apps em 2012</p>
+          <p>→ Tráfego pago em 2018</p>
+          <p class="text-accent font-bold">→ IA em 2026</p>
+        </div>
+      </div>
+      
+      <div class="grid md:grid-cols-2 gap-6 my-8">
+        <div class="p-6 border-2 border-green-500/30 bg-green-500/5 rounded-lg">
+          <p class="text-green-400 font-bold text-xl mb-2">Quem se posicionar agora</p>
+          <p class="text-white font-semibold">como especialista de alto valor, fica.</p>
+        </div>
+        
+        <div class="p-6 border-2 border-red-500/30 bg-red-500/5 rounded-lg">
+          <p class="text-red-400 font-bold text-xl mb-2">Quem continuar cobrando R$3k</p>
+          <p class="text-white font-semibold">vai ser engolido.</p>
+        </div>
+      </div>
+      
+      <p class="text-white font-bold text-2xl md:text-3xl text-center mt-12">
+        A pergunta não é <span class="text-accent">SE</span> isso vai acontecer.
+      </p>
+      <p class="text-white font-bold text-2xl md:text-3xl text-center">
+        A pergunta é: quando acontecer, você vai estar cobrando <span class="text-accent">R$50k</span> ou brigando por <span class="text-accent">R$2k</span>?
+      </p>
+    </div>
+  </section>
+
+  <!-- SEÇÃO 5: AS MENTIRAS -->
+  <section class="py-20 px-4 bg-spotlight/20">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-white font-bold text-3xl md:text-4xl mb-12 text-center">
+        Você diz pra si mesmo:
+      </h2>
+      
+      <div class="space-y-6">
+        <div class="p-6 border border-gray-800 rounded-lg bg-gray-900/50">
+          <p class="text-white italic text-lg mb-3">"Preciso de mais cases primeiro."</p>
+          <p class="text-accent font-bold text-lg mb-2">Mentira.</p>
+          <p class="text-textBody">Eu fechei R$30k sem portfólio nenhum. O cliente não compra seu passado — compra a clareza do que você apresenta.</p>
+        </div>
+        
+        <div class="p-6 border border-gray-800 rounded-lg bg-gray-900/50">
+          <p class="text-white italic text-lg mb-3">"O mercado aqui não paga isso."</p>
+          <p class="text-accent font-bold text-lg mb-2">Mentira.</p>
+          <p class="text-textBody">O mercado paga R$50k, R$70k, R$100k. Você só não está na frente desses clientes — ou está e não sabe converter.</p>
+        </div>
+        
+        <div class="p-6 border border-gray-800 rounded-lg bg-gray-900/50">
+          <p class="text-white italic text-lg mb-3">"Quando eu tiver mais experiência..."</p>
+          <p class="text-accent font-bold text-lg mb-2">Mentira.</p>
+          <p class="text-textBody">Você já sabe entregar. O que falta não é técnica — é saber vender o que você já faz.</p>
+        </div>
+        
+        <div class="p-6 border border-gray-800 rounded-lg bg-gray-900/50">
+          <p class="text-white italic text-lg mb-3">"Esse preço alto é pra agência grande."</p>
+          <p class="text-accent font-bold text-lg mb-2">Mentira.</p>
+          <p class="text-textBody">É pra quem sabe se posicionar. Tamanho não importa. Processo importa.</p>
+        </div>
+      </div>
+      
+      <div class="mt-12 p-8 border-2 border-accent rounded-lg text-center bg-accent/5">
+        <p class="text-white font-bold text-xl md:text-2xl mb-4">
+          Toda vez que você aceita R$3k, você treina o mercado a te pagar R$3k.
+        </p>
+        <p class="text-accent font-bold text-xl md:text-2xl">
+          E pior: você treina a si mesmo a acreditar que é isso que você vale.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO 6: PROVA — ANTES E DEPOIS -->
+  <section class="py-20 px-4">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-white font-bold text-3xl md:text-4xl mb-4 text-center">
+        Eu podia ficar aqui falando de teoria.
+      </h2>
+      <p class="text-textBody text-xl text-center mb-12">
+        Mas você é técnico igual eu. Você quer ver.
+      </p>
+      
+      <div class="grid md:grid-cols-2 gap-8 mb-8">
+        <!-- ANTES -->
+        <div class="p-6 border-2 border-gray-700 rounded-lg bg-gray-900/30">
+          <div class="text-center mb-4">
+            <span class="bg-red-500/20 text-red-400 px-4 py-2 rounded-full text-sm font-bold">ANTES — 2024</span>
+          </div>
+          <div class="border-2 border-gray-600 rounded-lg p-4 mb-4 overflow-hidden bg-gray-800/30">
+            <img id="img-antes" src="images/contrato-antes.jpg.png" alt="Contrato ANTES - R$ 4.997,00" class="w-full h-auto rounded-lg object-cover hidden" onload="this.classList.remove('hidden'); document.getElementById('placeholder-antes').classList.add('hidden');" onerror="this.classList.add('hidden'); document.getElementById('placeholder-antes').classList.remove('hidden');">
+            <div id="placeholder-antes" class="border-2 border-dashed border-gray-600 rounded-lg p-8 min-h-[300px] flex flex-col items-center justify-center">
+              <p class="text-textBody text-sm text-center mb-2">📄 Adicione a imagem do contrato ANTES</p>
+              <p class="text-gray-500 text-xs text-center">Salve como: <code class="text-accent">images/contrato-antes.jpg</code></p>
+              <p class="text-gray-500 text-xs text-center mt-2">ou <code class="text-accent">images/contrato-antes.png</code></p>
+            </div>
+          </div>
+          <div class="space-y-3 text-textBody">
+            <p><span class="text-white font-semibold">Proposta:</span> "Consultoria Completa"</p>
+            <p><span class="text-white font-semibold">Escopo:</span> Consultoria em projetos de IA</p>
+            <p class="text-accent text-2xl font-bold mt-4">Valor: R$ 4.997,00</p>
+          </div>
+        </div>
+        
+        <!-- DEPOIS -->
+        <div class="p-6 border-2 border-accent rounded-lg glow-shadow bg-accent/5">
+          <div class="text-center mb-4">
+            <span class="bg-accent/20 text-accent px-4 py-2 rounded-full text-sm font-bold">DEPOIS — 2025</span>
+          </div>
+          <div class="border-2 border-accent/50 rounded-lg p-4 mb-4 overflow-hidden bg-accent/5">
+            <img id="img-depois" src="images/contrato-depois.jpg.png" alt="Contrato DEPOIS - R$ 144.000,00" class="w-full h-auto rounded-lg object-cover hidden" onload="this.classList.remove('hidden'); document.getElementById('placeholder-depois').classList.add('hidden');" onerror="this.classList.add('hidden'); document.getElementById('placeholder-depois').classList.remove('hidden');">
+            <div id="placeholder-depois" class="border-2 border-dashed border-accent/50 rounded-lg p-8 min-h-[300px] flex flex-col items-center justify-center">
+              <p class="text-textBody text-sm text-center mb-2">📄 Adicione a imagem do contrato DEPOIS</p>
+              <p class="text-gray-500 text-xs text-center">Salve como: <code class="text-accent">images/contrato-depois.jpg</code></p>
+              <p class="text-gray-500 text-xs text-center mt-2">ou <code class="text-accent">images/contrato-depois.png</code></p>
+            </div>
+          </div>
+          <div class="space-y-3 text-textBody">
+            <p><span class="text-white font-semibold">Proposta:</span> "Plano Aceleração SDR IA"</p>
+            <p><span class="text-white font-semibold">Escopo:</span> Sistema completo de automação comercial com IA, vigência de 3 meses, setup/kick-off incluído</p>
+            <p class="text-accent text-3xl font-bold mt-4">Valor: R$ 144.000,00</p>
+          </div>
+        </div>
+      </div>
+      
+      <div class="text-center space-y-4">
+        <p class="text-white font-bold text-xl">
+          Mesmo serviço. Mesma complexidade técnica. Diferença de <span class="text-accent">R$ 139.003,00</span> no bolso.
+        </p>
+        <p class="text-textBody text-lg">
+          O que mudou não foi o que eu sei fazer.
+        </p>
+        <p class="text-white font-bold text-xl">
+          Foi como eu apresento, posiciono e precífico.
+        </p>
+        <p class="text-accent font-bold text-2xl mt-6">
+          Isso é o que você vai aprender no dia 24.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO 7: MINHA HISTÓRIA -->
+  <section class="py-20 px-4 bg-spotlight/20">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-white font-bold text-3xl md:text-4xl mb-12 text-center">
+        Minha História
+      </h2>
+      
+      <div class="space-y-6 text-textBody text-lg leading-relaxed">
+        <p>
+          Em janeiro de 2023, eu cobrava <span class="text-accent font-bold">R$2.500</span> por chatbot.
+        </p>
+        <p>
+          Mandava proposta com medo. Torcia pro cliente aceitar. Comemorava quando fechava — mesmo sabendo que tava barato.
+        </p>
+        <p>
+          Meu primeiro projeto de <span class="text-accent font-bold">R$30k</span> eu quase não mandei. Achei que o cliente ia rir da minha cara.
+        </p>
+        <p>
+          Ele fechou em 3 dias. Sem pedir desconto. Sem "vou pensar".
+        </p>
+        <p>
+          Não foi porque eu melhorei tecnicamente. Foi porque eu mudei o que estava na proposta e como conduzia a conversa.
+        </p>
+        
+        <div class="my-12 p-8 border-2 border-accent rounded-lg text-center bg-accent/5">
+          <p class="text-textBody mb-2">Em dezembro de 2025, fechei o ano com</p>
+          <p class="text-accent text-5xl md:text-6xl font-bold">R$1,96 milhão</p>
+          <p class="text-white text-xl font-semibold mt-2">Ticket médio de R$45k</p>
+        </div>
+        
+        <p>
+          Não mudei de área. Não virei influencer. Não tenho equipe de 30 pessoas.
+        </p>
+        <p class="text-white font-bold text-2xl md:text-3xl text-center mt-8">
+          Mudei como eu vendo. Só isso.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO 8: O QUE VOCÊ LEVA EMBORA -->
+  <section class="py-20 px-4">
+    <div class="max-w-4xl mx-auto">
+      <h2 class="text-white font-bold text-3xl md:text-4xl mb-4 text-center">
+        Não é "conhecimento".
+      </h2>
+      <p class="text-accent text-xl md:text-2xl text-center mb-12 font-semibold">
+        É material pronto pra usar segunda-feira:
+      </p>
+      
+      <div class="space-y-6">
+        <div class="p-6 border border-gray-800 rounded-lg bg-gray-900/30 hover:border-accent/50 transition-all">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-12 h-12 bg-accent rounded-full flex items-center justify-center text-white font-bold text-xl">1</div>
+            <div>
+              <h3 class="text-white font-bold text-xl mb-2">Planilha de Precificação por Valor</h3>
+              <p class="text-textBody">A matemática exata pra calcular preço baseado no problema do cliente — não nas suas horas de trabalho. Você vai saber cobrar R$40k e mostrar pro cliente por que ainda é barato.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="p-6 border border-gray-800 rounded-lg bg-gray-900/30 hover:border-accent/50 transition-all">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-12 h-12 bg-accent rounded-full flex items-center justify-center text-white font-bold text-xl">2</div>
+            <div>
+              <h3 class="text-white font-bold text-xl mb-2">Template de Proposta de Alto Ticket</h3>
+              <p class="text-textBody">A mesma estrutura que eu uso pra fechar R$30k-R$75k. Você troca nome do cliente, dados do projeto, e manda. Sem inventar nada.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="p-6 border border-gray-800 rounded-lg bg-gray-900/30 hover:border-accent/50 transition-all">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-12 h-12 bg-accent rounded-full flex items-center justify-center text-white font-bold text-xl">3</div>
+            <div>
+              <h3 class="text-white font-bold text-xl mb-2">Script de Qualificação (7 Perguntas)</h3>
+              <p class="text-textBody">As perguntas que faço antes de mandar qualquer proposta. Se o lead não passa, nem perco tempo.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="p-6 border border-gray-800 rounded-lg bg-gray-900/30 hover:border-accent/50 transition-all">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-12 h-12 bg-accent rounded-full flex items-center justify-center text-white font-bold text-xl">4</div>
+            <div>
+              <h3 class="text-white font-bold text-xl mb-2">Roteiro de Call Comercial</h3>
+              <p class="text-textBody">O passo a passo da conversa. O que falar primeiro, como apresentar preço, como responder "tá caro". Palavra por palavra.</p>
+            </div>
+          </div>
+        </div>
+        
+        <div class="p-6 border-2 border-accent rounded-lg glow-shadow bg-accent/10">
+          <div class="flex items-start gap-4">
+            <div class="flex-shrink-0 w-12 h-12 bg-accent rounded-full flex items-center justify-center text-white font-bold text-xl pulse-glow">5</div>
+            <div>
+              <h3 class="text-white font-bold text-xl mb-2">Sua Proposta Revisada Por Mim</h3>
+              <p class="text-textBody">Você monta sua proposta durante o workshop. Eu reviso ao vivo, na sua frente, com feedback direto. Você sai de lá com proposta pronta pra mandar.</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO 9: PRA QUEM É / NÃO É -->
+  <section class="py-20 px-4 bg-spotlight/20">
+    <div class="max-w-5xl mx-auto">
+      <div class="grid md:grid-cols-2 gap-8">
+        <!-- PRA QUEM É -->
+        <div class="p-8 border-2 border-green-500/50 rounded-lg bg-green-500/5">
+          <h3 class="text-green-400 font-bold text-2xl mb-6">PRA QUEM É:</h3>
+          <ul class="space-y-4 text-textBody">
+            <li class="flex items-start gap-3">
+              <span class="text-green-400 font-bold text-xl">→</span>
+              <span>Você já sabe entregar projeto de IA (N8N, automação, chatbot, agentes) mas cobra barato</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-400 font-bold text-xl">→</span>
+              <span>Você já perdeu cliente por preço ou aceitou desconto pra não perder</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-400 font-bold text-xl">→</span>
+              <span>Você quer um processo, não mais conteúdo genérico de "venda valor"</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-green-400 font-bold text-xl">→</span>
+              <span>Você está disposto a mudar como vende, não só o que vende</span>
+            </li>
+          </ul>
+        </div>
+        
+        <!-- PRA QUEM NÃO É -->
+        <div class="p-8 border-2 border-red-500/50 rounded-lg bg-red-500/5">
+          <h3 class="text-red-400 font-bold text-2xl mb-6">PRA QUEM NÃO É:</h3>
+          <ul class="space-y-4 text-textBody">
+            <li class="flex items-start gap-3">
+              <span class="text-red-400 font-bold text-xl">✗</span>
+              <span>Você ainda não sabe entregar um projeto de IA</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-red-400 font-bold text-xl">✗</span>
+              <span>Você quer "hack" ou "gatilho mental" pra manipular cliente</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-red-400 font-bold text-xl">✗</span>
+              <span>Você acha que só precisa de mais conhecimento técnico</span>
+            </li>
+            <li class="flex items-start gap-3">
+              <span class="text-red-400 font-bold text-xl">✗</span>
+              <span>Você não vai aplicar o material</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO 10: AS 3 OPÇÕES -->
+  <section class="py-20 px-4">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-white font-bold text-3xl md:text-4xl mb-12 text-center">
+        Você tem 3 opções agora:
+      </h2>
+      
+      <div class="grid md:grid-cols-3 gap-6 mb-12">
+        <!-- OPÇÃO 1 -->
+        <div class="p-6 border border-gray-700 rounded-lg bg-gray-900/30 opacity-60">
+          <div class="text-center mb-4">
+            <span class="bg-gray-700 text-gray-400 px-3 py-1 rounded text-sm font-bold">OPÇÃO 1</span>
+          </div>
+          <p class="text-textBody mb-4">Fecha essa página. Continua cobrando R$3k. Continua aceitando desconto. Daqui a 1 ano está na mesma.</p>
+          <p class="text-red-400 font-bold text-xl text-center">Custo: R$324k em 12 meses.</p>
+        </div>
+        
+        <!-- OPÇÃO 2 -->
+        <div class="p-6 border-2 border-yellow-500/50 rounded-lg bg-yellow-500/5">
+          <div class="text-center mb-4">
+            <span class="bg-yellow-500/20 text-yellow-400 px-3 py-1 rounded text-sm font-bold">OPÇÃO 2</span>
+          </div>
+          <p class="text-textBody mb-4">Tenta descobrir sozinho. Lê post no LinkedIn. Assiste vídeo no YouTube. Vai levar 1-2 anos.</p>
+          <p class="text-yellow-400 font-bold text-xl text-center">Custo: R$324k-R$648k + tempo.</p>
+        </div>
+        
+        <!-- OPÇÃO 3 -->
+        <div class="p-6 border-2 border-accent rounded-lg glow-shadow bg-accent/10 pulse-glow">
+          <div class="text-center mb-4">
+            <span class="bg-accent text-white px-3 py-1 rounded text-sm font-bold">OPÇÃO 3</span>
+          </div>
+          <p class="text-white mb-4 font-semibold">Investe 1 dia e aprende o que funciona. Pega o processo validado. Sai com material pronto. Segunda-feira manda proposta de R$30k+.</p>
+          <p class="text-accent font-bold text-2xl text-center">Custo: R$997</p>
+          <p class="text-white font-semibold text-center mt-2">Retorno: Um projeto já paga 30x.</p>
+        </div>
+      </div>
+      
+      <p class="text-white font-bold text-2xl md:text-3xl text-center">
+        A diferença entre a opção 1 e a opção 3 não é talento. Não é sorte. É decisão.
+      </p>
+    </div>
+  </section>
+
+  <!-- SEÇÃO 11: DETALHES DO EVENTO -->
+  <section class="py-20 px-4 bg-spotlight/20">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="text-white font-bold text-3xl md:text-4xl mb-12 text-center">
+        Detalhes do Evento
+      </h2>
+      
+      <div class="bg-gray-900/50 border border-gray-800 rounded-lg p-8 space-y-6">
+        <div class="flex items-start gap-4">
+          <span class="text-3xl">📅</span>
+          <div>
+            <p class="text-white font-bold text-lg">24 de Janeiro de 2025</p>
+            <p class="text-textBody">(Sábado)</p>
+          </div>
+        </div>
+        
+        <div class="bg-accent/10 border-2 border-accent rounded-lg p-6 glow-shadow">
+          <div class="flex items-start gap-4">
+            <span class="text-4xl">📍</span>
+            <div class="flex-1">
+              <p class="text-accent font-bold text-xl mb-2">LOCAL DO EVENTO</p>
+              <p class="text-white font-bold text-lg mb-1">Av Roque Petroni junior, 850</p>
+              <p class="text-white text-base mb-2">Morumbi, São Paulo — SP</p>
+              <a href="https://www.google.com/maps/search/?api=1&query=Av+Roque+Petroni+junior,+850,+Morumbi,+São+Paulo" 
+                 target="_blank" 
+                 class="inline-flex items-center gap-2 text-accent hover:text-accentHover font-semibold text-sm transition-colors mt-2">
+                <span>🗺️ Abrir no Google Maps</span>
+                <span>→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <div class="flex items-start gap-4">
+          <span class="text-3xl">🕐</span>
+          <div>
+            <p class="text-white font-bold text-lg">9h às 18h</p>
+          </div>
+        </div>
+        
+        <div class="flex items-start gap-4">
+          <span class="text-3xl">👥</span>
+          <div>
+            <p class="text-white font-bold text-lg"><span class="text-accent">15 vagas</span></p>
+            <p class="text-textBody">(revisão individual de cada proposta)</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO 12: INVESTIMENTO / PREÇO -->
+  <section class="py-20 px-4">
+    <div class="max-w-3xl mx-auto text-center">
+      <h2 class="text-white font-bold text-3xl md:text-4xl mb-12">
+        Investimento
+      </h2>
+      
+      <div class="mb-8">
+        <p class="text-accent text-7xl md:text-8xl font-bold mb-4">R$ 997</p>
+        <p class="text-textBody text-xl mb-2">ou até 4x de R$270,73 no cartão</p>
+        <div class="inline-block bg-accent/20 border border-accent rounded-lg px-4 py-2 mt-4">
+          <p class="text-accent font-bold">Pix à vista: R$ 997</p>
+        </div>
+      </div>
+      
+      <p class="text-white text-xl md:text-2xl mb-8 max-w-2xl mx-auto">
+        Você vai investir R$997 pra aprender a fechar projetos de R$30k, R$50k, R$70k.
+      </p>
+      <p class="text-accent font-bold text-2xl mb-12">
+        Um único projeto paga o workshop 30x.
+      </p>
+      
+      <a href="https://payfast.greenn.com.br/pre-checkout/153224" target="_blank" class="cta-button pulse-glow text-2xl px-12 py-6 inline-block">
+        GARANTIR MINHA VAGA
+      </a>
+      
+      <p class="text-textBody mt-6 text-sm">
+        Vagas restantes: <span class="text-accent font-bold" id="vagas-restantes">15 de 15</span>
+      </p>
+    </div>
+  </section>
+
+  <!-- SEÇÃO 13: GARANTIA -->
+  <section class="py-20 px-4 bg-spotlight/20">
+    <div class="max-w-3xl mx-auto">
+      <div class="border-2 border-accent rounded-lg p-8 bg-accent/5 text-center">
+        <div class="text-6xl mb-4">🛡️</div>
+        <h3 class="text-white font-bold text-3xl mb-6">
+          Garantia de <span class="text-accent">7 dias</span>
+        </h3>
+        <p class="text-textBody text-lg leading-relaxed mb-4">
+          Eu não quero sua grana se isso não funcionar pra você.
+        </p>
+        <p class="text-textBody text-lg leading-relaxed mb-4">
+          Se em 7 dias após o workshop você sentir que não tem clareza absoluta de como fechar projetos maiores, me manda um email.
+        </p>
+        <p class="text-white font-bold text-xl">
+          Devolvo <span class="text-accent">100%</span> do valor. Sem pergunta, sem justificativa, sem burocracia.
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO 14: OBJEÇÕES / FAQ -->
+  <section class="py-20 px-4">
+    <div class="max-w-3xl mx-auto">
+      <h2 class="text-white font-bold text-3xl md:text-4xl mb-12 text-center">
+        Objeções Comuns
+      </h2>
+      
+      <div class="space-y-6">
+        <div class="p-6 border border-gray-800 rounded-lg bg-gray-900/30">
+          <p class="text-white font-bold text-lg mb-3">"R$997 é caro."</p>
+          <p class="text-textBody">Não. Caro é perder R$27k por mês porque você não sabe fazer proposta.</p>
+        </div>
+        
+        <div class="p-6 border border-gray-800 rounded-lg bg-gray-900/30">
+          <p class="text-white font-bold text-lg mb-3">"Será que funciona pra mim?"</p>
+          <p class="text-textBody">Se você sabe entregar projeto de IA, funciona. O processo não depende de "ter nome".</p>
+        </div>
+        
+        <div class="p-6 border border-gray-800 rounded-lg bg-gray-900/30">
+          <p class="text-white font-bold text-lg mb-3">"E se eu não conseguir aplicar?"</p>
+          <p class="text-textBody">Você sai com material pronto. E tem garantia de 7 dias.</p>
+        </div>
+        
+        <div class="p-6 border border-gray-800 rounded-lg bg-gray-900/30">
+          <p class="text-white font-bold text-lg mb-3">"Vou esperar a próxima turma."</p>
+          <p class="text-textBody">Não vai ter próxima turma presencial em 2025. Cada mês que espera são mais R$27k na mesa.</p>
+        </div>
+        
+        <div class="p-6 border border-gray-800 rounded-lg bg-gray-900/30">
+          <p class="text-white font-bold text-lg mb-3">"Preciso pensar."</p>
+          <p class="text-textBody">Você já pensou. Você sabe que cobra barato. A única pergunta é se vai agir agora.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- SEÇÃO 15: FECHAMENTO FINAL -->
+  <section class="py-20 px-4 bg-spotlight/20">
+    <div class="max-w-5xl mx-auto">
+      <h2 class="text-white font-bold text-3xl md:text-4xl mb-12 text-center">
+        Daqui a 6 meses você vai estar em um de dois lugares:
+      </h2>
+      
+      <div class="grid md:grid-cols-2 gap-8 mb-12">
+        <!-- LUGAR 1 -->
+        <div class="p-8 border-2 border-accent rounded-lg glow-shadow bg-accent/10">
+          <h3 class="text-accent font-bold text-2xl mb-6 text-center">LUGAR 1</h3>
+          <ul class="space-y-3 text-textBody">
+            <li class="flex items-start gap-2">
+              <span class="text-green-400">✓</span>
+              <span>Fechando projeto de R$40k, R$50k</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-green-400">✓</span>
+              <span>Escolhendo cliente</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-green-400">✓</span>
+              <span>Trabalhando com margem</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-green-400">✓</span>
+              <span>Crescendo</span>
+            </li>
+          </ul>
+        </div>
+        
+        <!-- LUGAR 2 -->
+        <div class="p-8 border-2 border-gray-700 rounded-lg bg-gray-900/50 opacity-70">
+          <h3 class="text-gray-400 font-bold text-2xl mb-6 text-center">LUGAR 2</h3>
+          <ul class="space-y-3 text-textBody">
+            <li class="flex items-start gap-2">
+              <span class="text-red-400">✗</span>
+              <span>Brigando por projeto de R$3k</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-red-400">✗</span>
+              <span>Ouvindo "tá caro"</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-red-400">✗</span>
+              <span>Aceitando desconto</span>
+            </li>
+            <li class="flex items-start gap-2">
+              <span class="text-red-400">✗</span>
+              <span>Reclamando do mercado</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+      
+      <div class="text-center space-y-8 mb-12">
+        <p class="text-white font-bold text-2xl md:text-3xl">
+          A técnica você já tem.
+        </p>
+        <p class="text-white font-bold text-2xl md:text-3xl">
+          A oportunidade está na sua frente.
+        </p>
+        <p class="text-accent font-bold text-3xl md:text-4xl">
+          A única coisa que separa você do Lugar 1 é uma decisão.
+        </p>
+      </div>
+      
+      <div class="text-center">
+        <a href="https://payfast.greenn.com.br/pre-checkout/153224" target="_blank" class="cta-button pulse-glow text-2xl px-12 py-6 inline-block">
+          EU ESCOLHO O LUGAR 1
+        </a>
+        <p class="text-textBody mt-6">
+          Vagas restantes: <span class="text-accent font-bold text-xl" id="vagas-restantes-final">15 de 15</span>
+        </p>
+      </div>
+    </div>
+  </section>
+
+  <!-- RODAPÉ -->
+  <footer class="py-12 px-4 border-t border-gray-800">
+    <div class="max-w-4xl mx-auto text-center space-y-6 text-textBody">
+      <div>
+        <h3 class="text-white font-bold text-xl mb-2">Workshop: Por Que Sua Agência de IA Vende a R$3k Quando Poderia Fechar R$50k?</h3>
+        <p>Data: 24 de Janeiro de 2025</p>
+        <p>Local: Av Roque Petroni junior, 850 - Morumbi, São Paulo — SP</p>
+        <p>Facilitador: Gábriel Limá — CEO da Cognita (R$1,96M em 2025)</p>
+      </div>
+      
+      <div class="pt-6 border-t border-gray-800">
+        <p class="mb-2">Dúvidas? <a href="https://wa.me/5511957166850" target="_blank" class="text-accent hover:text-accentHover font-semibold">WhatsApp: +55 11 95716-6850</a></p>
+        <p class="text-sm">© 2025 Cognita Soluções em Inteligência Artificial</p>
+      </div>
+    </div>
+  </footer>
+
+  <!-- CTA STICKY MOBILE -->
+  <div class="sticky-cta">
+    <a href="https://payfast.greenn.com.br/pre-checkout/153224" target="_blank" class="cta-button pulse-glow w-full text-lg py-4 block">
+      GARANTIR MINHA VAGA
+    </a>
+  </div>
+
+  <!-- SEÇÃO FINAL: GARANTIR VAGA -->
+  <section id="formulario" class="py-20 px-4 bg-gradient-to-b from-background to-spotlight/30">
+    <div class="max-w-4xl mx-auto">
+      <div class="text-center mb-12">
+        <h2 class="text-white font-bold text-4xl md:text-5xl mb-4">
+          Garanta Sua Vaga Agora
+        </h2>
+        <p class="text-textBody text-xl">
+          Últimas vagas disponíveis. Não perca essa oportunidade.
+        </p>
+      </div>
+      
+      <div class="bg-gray-900/80 border-2 border-accent rounded-2xl glow-shadow p-8 md:p-12 backdrop-blur-sm">
+        <!-- Resumo do Investimento -->
+        <div class="text-center mb-8 pb-8 border-b border-gray-800">
+          <p class="text-textBody text-lg mb-2">Investimento</p>
+          <p class="text-accent text-6xl md:text-7xl font-bold mb-2">R$ 997</p>
+          <p class="text-textBody text-lg mb-4">ou até 4x de R$270,73 no cartão</p>
+          <div class="inline-block bg-accent/20 border border-accent rounded-lg px-6 py-3 mt-2">
+            <p class="text-accent font-bold text-lg">💳 Pix à vista: R$ 997</p>
+          </div>
+        </div>
+        
+        <!-- Informações do Evento -->
+        <div class="mb-8">
+          <!-- Data -->
+          <div class="bg-gray-800/50 rounded-lg p-6 border border-gray-700 mb-4">
+            <div class="flex items-center gap-3">
+              <span class="text-2xl">📅</span>
+              <div class="text-left">
+                <p class="text-white font-semibold">Data</p>
+                <p class="text-textBody">24 de Janeiro de 2025 (Sábado)</p>
+              </div>
+            </div>
+          </div>
+          
+          <!-- Local - DESTACADO -->
+          <div class="bg-accent/10 border-2 border-accent rounded-lg p-8 glow-shadow">
+            <div class="flex items-start gap-4 mb-4">
+              <span class="text-4xl">📍</span>
+              <div class="flex-1">
+                <p class="text-accent font-bold text-2xl mb-3">LOCAL DO EVENTO</p>
+                <p class="text-white font-bold text-xl mb-2">Av Roque Petroni junior, 850</p>
+                <p class="text-white text-lg mb-1">Morumbi, São Paulo — SP</p>
+                <p class="text-textBody mt-4 text-sm">
+                  <strong class="text-white">Importante:</strong> Confirme o endereço antes de sair. 
+                  O evento acontecerá neste local específico.
+                </p>
+              </div>
+            </div>
+            
+            <!-- Link para Google Maps (opcional) -->
+            <div class="mt-4 pt-4 border-t border-accent/30">
+              <a href="https://www.google.com/maps/search/?api=1&query=Av+Roque+Petroni+junior,+850,+Morumbi,+São+Paulo" 
+                 target="_blank" 
+                 class="inline-flex items-center gap-2 text-accent hover:text-accentHover font-semibold transition-colors">
+                <span>🗺️</span>
+                <span>Abrir no Google Maps</span>
+                <span>→</span>
+              </a>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Urgência: Vagas Restantes -->
+        <div class="bg-red-500/10 border-2 border-red-500/30 rounded-lg p-6 mb-8 text-center">
+          <p class="text-red-400 font-bold text-xl mb-2">⚠️ ÚLTIMAS VAGAS</p>
+          <p class="text-white text-2xl font-bold mb-1">
+            <span id="vagas-restantes-checkout" class="text-red-400">15</span> de 15 vagas restantes
+          </p>
+          <p class="text-textBody text-sm">Não perca sua chance. As vagas estão acabando rapidamente.</p>
+        </div>
+        
+        <!-- Botão Principal de Checkout -->
+        <div class="text-center mb-6">
+          <a href="https://payfast.greenn.com.br/pre-checkout/153224" target="_blank" class="cta-button pulse-glow text-2xl md:text-3xl px-16 py-6 inline-block w-full md:w-auto">
+            🎯 GARANTIR MINHA VAGA AGORA
+          </a>
+          <p class="text-textBody text-sm mt-4">
+            Clique no botão acima para ser redirecionado ao checkout seguro
+          </p>
+        </div>
+        
+        <!-- Garantia e Segurança -->
+        <div class="grid md:grid-cols-2 gap-4 mt-8 pt-8 border-t border-gray-800">
+          <div class="flex items-start gap-3">
+            <span class="text-2xl">🛡️</span>
+            <div>
+              <p class="text-white font-semibold mb-1">Garantia de 7 dias</p>
+              <p class="text-textBody text-sm">100% do seu dinheiro de volta se não funcionar</p>
+            </div>
+          </div>
+          
+          <div class="flex items-start gap-3">
+            <span class="text-2xl">🔒</span>
+            <div>
+              <p class="text-white font-semibold mb-1">Pagamento 100% seguro</p>
+              <p class="text-textBody text-sm">Processado por plataforma certificada</p>
+            </div>
+          </div>
+        </div>
+        
+        <!-- Informações Adicionais -->
+        <div class="mt-8 pt-8 border-t border-gray-800">
+          <p class="text-textBody text-sm text-center mb-2">
+            💡 <strong class="text-white">Lembre-se:</strong> Um único projeto de R$30k+ já paga o workshop 30x.
+          </p>
+          <p class="text-textBody text-xs text-center">
+            Esta é sua chance de mudar como você vende. Não deixe passar.
+          </p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Script para contador de vagas com animação de urgência -->
+  <script>
+    // Configuração do contador de vagas
+    const TOTAL_VAGAS = 15;
+    const VAGAS_MINIMAS = 3; // Número mínimo para manter urgência (não chega a zero)
+    const INTERVALO_DIMINUICAO = 2000; // 2 segundos em milissegundos
+    
+    // Estado inicial das vagas
+    let vagasRestantes = TOTAL_VAGAS;
+    let intervaloAnimacao = null;
+    
+    // Função para atualizar o contador na página com animação
+    function atualizarContador(animar = true) {
+      const elementos = document.querySelectorAll('#vagas-restantes, #vagas-restantes-final');
+      const elementoCheckout = document.getElementById('vagas-restantes-checkout');
+      
+      // Atualiza elementos principais (mostram "X de 15")
+      elementos.forEach(elemento => {
+        if (elemento) {
+          // Animação de fade out/in ao mudar o número
+          if (animar) {
+            // Adiciona classe de animação
+            elemento.classList.add('number-change');
+            elemento.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+            elemento.style.opacity = '0.3';
+            elemento.style.transform = 'scale(0.95)';
+            
+            setTimeout(() => {
+              elemento.textContent = `${vagasRestantes} de ${TOTAL_VAGAS}`;
+              elemento.style.opacity = '1';
+              elemento.style.transform = 'scale(1)';
+              
+              // Remove a classe após a animação
+              setTimeout(() => {
+                elemento.classList.remove('number-change');
+              }, 600);
+            }, 300);
+          } else {
+            elemento.textContent = `${vagasRestantes} de ${TOTAL_VAGAS}`;
+          }
+          
+          // Remove classes anteriores de cor
+          elemento.classList.remove('text-red-400', 'text-yellow-400', 'text-accent');
+          
+          // Adiciona classes de urgência baseado no número de vagas
+          if (vagasRestantes <= 3) {
+            elemento.classList.add('animate-pulse');
+            elemento.classList.add('text-red-400');
+          } else if (vagasRestantes <= 7) {
+            elemento.classList.add('text-yellow-400');
+          } else {
+            elemento.classList.add('text-accent');
+          }
+        }
+      });
+      
+      // Atualiza elemento do checkout (mostra apenas o número)
+      if (elementoCheckout) {
+        if (animar) {
+          elementoCheckout.style.transition = 'opacity 0.3s ease, transform 0.3s ease';
+          elementoCheckout.style.opacity = '0.3';
+          elementoCheckout.style.transform = 'scale(0.95)';
+          
+          setTimeout(() => {
+            elementoCheckout.textContent = vagasRestantes;
+            elementoCheckout.style.opacity = '1';
+            elementoCheckout.style.transform = 'scale(1)';
+          }, 300);
+        } else {
+          elementoCheckout.textContent = vagasRestantes;
+        }
+        
+        // Atualiza cor baseado no número
+        elementoCheckout.classList.remove('text-red-400', 'text-yellow-400', 'text-accent');
+        if (vagasRestantes <= 3) {
+          elementoCheckout.classList.add('animate-pulse', 'text-red-400');
+        } else if (vagasRestantes <= 7) {
+          elementoCheckout.classList.add('text-yellow-400');
+        } else {
+          elementoCheckout.classList.add('text-red-400');
+        }
+      }
+    }
+    
+    // Função para diminuir vagas gradualmente
+    function diminuirVagas() {
+      if (vagasRestantes > VAGAS_MINIMAS) {
+        vagasRestantes--;
+        atualizarContador(true);
+        
+        // Se chegou no mínimo, para a animação
+        if (vagasRestantes <= VAGAS_MINIMAS) {
+          if (intervaloAnimacao) {
+            clearInterval(intervaloAnimacao);
+            intervaloAnimacao = null;
+          }
+        }
+      }
+    }
+    
+    // Inicia a animação quando a página carrega
+    document.addEventListener('DOMContentLoaded', function() {
+      // Inicializa o contador
+      atualizarContador(false);
+      
+      // Aguarda 3 segundos antes de começar a diminuir (tempo para o usuário ler a página)
+      setTimeout(() => {
+        // Inicia a diminuição automática a cada 2 segundos
+        intervaloAnimacao = setInterval(diminuirVagas, INTERVALO_DIMINUICAO);
+      }, 3000);
+    });
+    
+    // Pausa a animação quando o usuário sai da aba (para não continuar diminuindo quando não está vendo)
+    document.addEventListener('visibilitychange', function() {
+      if (document.hidden) {
+        // Página não está visível - pausa
+        if (intervaloAnimacao) {
+          clearInterval(intervaloAnimacao);
+          intervaloAnimacao = null;
+        }
+      } else {
+        // Página voltou a ficar visível - retoma (se ainda não chegou no mínimo)
+        if (vagasRestantes > VAGAS_MINIMAS && !intervaloAnimacao) {
+          intervaloAnimacao = setInterval(diminuirVagas, INTERVALO_DIMINUICAO);
+        }
+      }
+    });
+    
+    // Rastreamento de eventos do Meta Pixel nos botões CTA
+    document.querySelectorAll('.cta-button').forEach(button => {
+      button.addEventListener('click', function() {
+        // Rastreia o evento de clique no botão CTA
+        if (typeof fbq !== 'undefined') {
+          fbq('track', 'InitiateCheckout', {
+            content_name: 'Workshop: De R$3k para R$50k',
+            content_category: 'Workshop Presencial',
+            value: 997,
+            currency: 'BRL'
+          });
+          
+          // Também rastreia como evento personalizado
+          fbq('trackCustom', 'CTAButtonClick', {
+            button_text: this.textContent.trim(),
+            page_section: this.closest('section')?.id || 'unknown'
+          });
+        }
+      });
+    });
+  </script>
+
+</body>
+</html>
