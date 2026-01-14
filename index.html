@@ -697,7 +697,7 @@
       </a>
       
       <p class="text-textBody mt-6 text-sm">
-        Vagas restantes: <span class="text-accent font-bold" id="vagas-restantes">15 de 15</span>
+        Vagas restantes: <span class="text-accent font-bold" id="vagas-restantes">4 de 15</span>
       </p>
     </div>
   </section>
@@ -831,7 +831,7 @@
           EU ESCOLHO O LUGAR 1
         </a>
         <p class="text-textBody mt-6">
-          Vagas restantes: <span class="text-accent font-bold text-xl" id="vagas-restantes-final">15 de 15</span>
+          Vagas restantes: <span class="text-accent font-bold text-xl" id="vagas-restantes-final">4 de 15</span>
         </p>
       </div>
     </div>
@@ -929,7 +929,7 @@
         <div class="bg-red-500/10 border-2 border-red-500/30 rounded-lg p-6 mb-8 text-center">
           <p class="text-red-400 font-bold text-xl mb-2">⚠️ ÚLTIMAS VAGAS</p>
           <p class="text-white text-2xl font-bold mb-1">
-            <span id="vagas-restantes-checkout" class="text-red-400">15</span> de 15 vagas restantes
+            <span id="vagas-restantes-checkout" class="text-red-400">4</span> de 15 vagas restantes
           </p>
           <p class="text-textBody text-sm">Não perca sua chance. As vagas estão acabando rapidamente.</p>
         </div>
@@ -980,11 +980,11 @@
   <script>
     // Configuração do contador de vagas
     const TOTAL_VAGAS = 15;
-    const VAGAS_MINIMAS = 3; // Número mínimo para manter urgência (não chega a zero)
+    const VAGAS_MINIMAS = 1; // Número mínimo para manter urgência (não chega a zero)
     const INTERVALO_DIMINUICAO = 2000; // 2 segundos em milissegundos
     
-    // Estado inicial das vagas
-    let vagasRestantes = TOTAL_VAGAS;
+    // Estado inicial das vagas (começando com apenas 4 vagas restantes para criar urgência)
+    let vagasRestantes = 4;
     let intervaloAnimacao = null;
     
     // Função para atualizar o contador na página com animação
